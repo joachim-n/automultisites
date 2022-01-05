@@ -13,14 +13,15 @@ class Sites {
    * This should be called from sites/sites.php thus:
    *
    * @code
-   *  $sites_dir = $app_root . '/sites';
-   *  \Automultisites\Sites::addLocalSites($sites, $sites_dir);
+   *  \Automultisites\Sites::addLocalSites($sites, $app_root);
    * @endcode
    *
    * @param array &$sites
    *   The sites directory to populate.
-   * @param string $sites_dir
-   *   The absolute path to the sites directory.
+   * @param string $app_root
+   *   The absolute path to the app root. In Drupal's sites.php this is a
+   *   locally-defined variable, as the file is included by defined in
+   *   DrupalKernel::findSitePath() which defines it.
    * @param string $site_dir_prefix
    *   (optional) The prefix used for names of site directories in sites/.
    *   Defaults to 'local-', so your sites directories would be sites/local-foo/,
@@ -33,7 +34,9 @@ class Sites {
    *   (optional) The server part of the URL to use in the site alias. Defaults to
    *   'localhost'. TODO: figure this out automatically.
    */
-  public static function addLocalSites(array &$sites, string $sites_dir, string $site_dir_prefix = 'local-', string $alias_prefix = '', string $server_prefix = 'localhost') {
+  public static function addLocalSites(array &$sites, string $app_root, string $site_dir_prefix = 'local-', string $alias_prefix = '', string $server_prefix = 'localhost') {
+    $sites_dir = $app_root . '/sites';
+
     if (php_sapi_name() == "cli") {
       // Running on the command line, could be Drush or PHPUnit.
       if (isset($_SERVER['SIMPLETEST_BASE_URL'])) {
