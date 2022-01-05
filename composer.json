@@ -13,5 +13,7 @@
             "email": "joachim@107701.no-reply.drupal.org"
         }
     ],
-    "require": {}
+    "require": {
+        "symfony/yaml": "*"
+    }
 }
