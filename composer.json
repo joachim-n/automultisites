@@ -1,0 +1,17 @@
+{
+    "name": "joachim-n/automultisites",
+    "description": "Provides helper code for running Drupal with automatic multisites based on folder structure.",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Automultisites\\": ""
+        }
+    },
+    "authors": [
+        {
+            "name": "Joachim Noreiko",
+            "email": "joachim@107701.no-reply.drupal.org"
+        }
+    ],
+    "require": {}
+}
