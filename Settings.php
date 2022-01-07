@@ -60,8 +60,18 @@ class Settings {
     // If the database details are set, assume the subsite's database name
     // uses a common prefix.
     if (isset($databases['default']['default']['database'])) {
-      // TODO: don't assume a '-' separator.
-      $databases['default']['default']['database'] .= '-' . $site_key;
+      // Deduce a word separator used in the database name, if any.
+      // Fall back to a '_' if the database name is a single word.
+      $database_name = $databases['default']['default']['database'];
+      $database_separators = preg_replace('@[[:alnum:]]*@', '', $database_name);
+      if ($database_separators) {
+        $database_separator = substr($database_separators, 0, 1);
+      }
+      else {
+        $database_separator = '_';
+      }
+
+      $databases['default']['default']['database'] .= $database_separator . $site_key;
     }
 
     // Set the config folder to a folder inside the site folder.
