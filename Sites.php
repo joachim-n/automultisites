@@ -2,6 +2,8 @@
 
 namespace Automultisites;
 
+use Drush\Drush;
+
 /**
  * Contains helper code for use in sites.php.
  */
@@ -13,6 +15,8 @@ class Sites {
    * This should be called from sites/sites.php thus:
    *
    * @code
+   *  // This needs to be defined as a workaround for Drush.
+   *  $sites = [];
    *  \Automultisites\Sites::addLocalSites($sites, $app_root);
    * @endcode
    *
@@ -22,6 +26,8 @@ class Sites {
    *   The absolute path to the app root. In Drupal's sites.php this is a
    *   locally-defined variable, as the file is included by defined in
    *   DrupalKernel::findSitePath() which defines it.
+   *   (This is only optional as a workaround for the Drush site-install
+   *   command.)
    * @param string $site_dir_prefix
    *   (optional) The prefix used for names of site directories in sites/.
    *   Defaults to 'local-', so your sites directories would be sites/local-foo/,
@@ -34,7 +40,13 @@ class Sites {
    *   (optional) The server part of the URL to use in the site alias. Defaults to
    *   'localhost'. TODO: figure this out automatically.
    */
-  public static function addLocalSites(array &$sites, string $app_root, string $site_dir_prefix = 'local-', string $alias_prefix = '', string $server_prefix = 'localhost') {
+  public static function addLocalSites(array &$sites, string $app_root = NULL, string $site_dir_prefix = 'local-', string $alias_prefix = '', string $server_prefix = 'localhost') {
+    // Workaround for Drush site-install command, which includes sites.php
+    // but doesn't provide it with the same environment as DrupalKernel.
+    if (empty($app_root)) {
+      $app_root = Drush::bootstrapManager()->getRoot();
+    }
+
     $sites_dir = $app_root . '/sites';
 
     if (php_sapi_name() == "cli") {
