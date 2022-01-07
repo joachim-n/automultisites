@@ -33,6 +33,11 @@ listing:
 
 the site keys are 'alpha' and 'beta'.
 
+Installation
+------------
+
+Install with Composer: `composer require joachim-n/automultisites`.
+
 Drush command
 -------------
 
