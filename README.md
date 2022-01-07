@@ -102,6 +102,6 @@ Automultisites\Settings::configureSiteSettings(
 
 ```
 alpha:
-    root: /path/to/project/web
-    uri: localhost.local-alpha
+  root: /path/to/project/web
+  uri: localhost.local-alpha
 ```
