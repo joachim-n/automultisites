@@ -62,7 +62,6 @@ class SitesDrushCommands extends DrushCommands {
     Automultisites\Settings::configureSiteSettings(
       $site_path,
       $databases,
-      $config_directories,
       $settings,
       $config
     );

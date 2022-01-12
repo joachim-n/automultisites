@@ -91,7 +91,6 @@ include $app_root . '/sites/default/settings.php';
 Automultisites\Settings::configureSiteSettings(
   $site_path,
   $databases,
-  $config_directories,
   $settings,
   $config
 );

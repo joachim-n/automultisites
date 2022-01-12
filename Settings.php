@@ -21,7 +21,6 @@ class Settings {
    * Automultisites\Settings::configureSiteSettings(
    *   $site_path,
    *   $databases,
-   *   $config_directories,
    *   $settings,
    *   $config
    * );
@@ -35,11 +34,10 @@ class Settings {
    * @param array $databases
    *   The databases array. If this already contains a database definition,
    *   the database name has a the site key appended as a suffix.
-   * @param array $config_directories
-   *   The config directories array. The site's config folder is set to
-   *   sites/SUBSITE/config/sync.
    * @param array $settings
-   *   The settings array. The site's files path is set to sites/SUBSITE/files.
+   *   The settings array.
+   *    - The site's files path is set to sites/SUBSITE/files.
+   *    - The site's config folder is set to sites/SUBSITE/config/sync.
    * @param array $config
    *   The config array. The site's temporary files path is set to
    *   sites/SUBSITE/files/tmp.
@@ -49,7 +47,6 @@ class Settings {
   public static function configureSiteSettings(
     $site_path,
     &$databases,
-    &$config_directories,
     &$settings,
     &$config,
     $site_dir_prefix = 'local-'
@@ -75,7 +72,7 @@ class Settings {
     }
 
     // Set the config folder to a folder inside the site folder.
-    $config_directories['sync'] = $site_path . '/config/sync';
+    $settings['config_sync_directory'] = $site_path . '/config/sync';
 
     // Set public and tmp files.
     $settings['file_public_path'] = $site_path . '/files';
