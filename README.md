@@ -83,12 +83,8 @@ $ cp web/sites/default/default.settings.php web/sites/local-alpha/settings.php
 6. In the new settings.php file, add the following code:
 
 ```
-// Use the default site's settings as a common base.
-if (file_exists($app_root . '/sites/default/settings.php')) {
-include $app_root . '/sites/default/settings.php';
-}
-
 Automultisites\Settings::configureSiteSettings(
+  $app_root,
   $site_path,
   $databases,
   $settings,

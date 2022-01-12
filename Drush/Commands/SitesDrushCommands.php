@@ -54,12 +54,8 @@ class SitesDrushCommands extends DrushCommands {
     // Append code to the subsite's settings.php file.
     $settings_php_code = <<<'EOT'
 
-    // Use the default site's settings as a common base.
-    if (file_exists($app_root . '/sites/default/settings.php')) {
-      include $app_root . '/sites/default/settings.php';
-    }
-
     Automultisites\Settings::configureSiteSettings(
+      $app_root,
       $site_path,
       $databases,
       $settings,
