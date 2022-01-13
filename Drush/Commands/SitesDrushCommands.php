@@ -67,10 +67,12 @@ class SitesDrushCommands extends DrushCommands {
 
     // Ensure a drush sites file exists, and stop here if we can't create one.
     if (!file_exists($project_root . '/drush/sites/local.site.yml')) {
-      $result = mkdir($project_root . '/drush/sites', 0777, TRUE);
-      if (!$result) {
-        $this->io()->warning("Unable to create folder 'drush/sites'.");
-        return;
+      if (!file_exists($project_root . '/drush/sites')) {
+        $result = mkdir($project_root . '/drush/sites', 0777, TRUE);
+        if (!$result) {
+          $this->io()->warning("Unable to create folder 'drush/sites'.");
+          return;
+        }
       }
 
       $result = file_put_contents($project_root . '/drush/sites/local.site.yml', '');
