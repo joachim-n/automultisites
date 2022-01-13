@@ -27,6 +27,19 @@ class SitesDrushCommands extends DrushCommands {
   public function newSubsite(string $site_key, $options = ['prefix' => 'local-']) {
     $web_root  = Drush::bootstrapManager()->getRoot();
     $project_root = dirname($web_root);
+    $site_folder = $options['prefix'] . $site_key;
+
+    if (file_exists($web_root  . '/sites/' . $site_folder)) {
+      $this->io()->error("Site folder $site_folder already exists.");
+      $fail = TRUE;
+    }
+    if (file_exists($web_root  . '/' . $site_folder)) {
+      $this->io()->error("File $site_folder already exists in the Drupal root.");
+      $fail = TRUE;
+    }
+    if (!empty($fail)) {
+      return;
+    }
 
     // Ensure sites.php, and append code to it.
     if (!file_exists($web_root  . '/sites/sites.php')) {
@@ -43,8 +56,6 @@ class SitesDrushCommands extends DrushCommands {
 
       file_put_contents($web_root  . '/sites/sites.php', $sites_php_code, \FILE_APPEND);
     }
-
-    $site_folder = $options['prefix'] . $site_key;
 
     symlink('.', $web_root  . '/' . $site_folder);
 
