@@ -96,10 +96,12 @@ class SitesDrushCommands extends DrushCommands {
     // Try to find an existing site alias definition, so we can get the uri
     // from it.
     $site_definitions = Yaml::parseFile($project_root . '/drush/sites/local.site.yml');
-    foreach ($site_definitions as $site_definition) {
-      if (strpos($site_definition['uri'], $options['prefix']) !== FALSE) {
-        $base_uri = substr($site_definition['uri'], 0, strpos($site_definition['uri'], $options['prefix']) + strlen($options['prefix']));
-        break;
+    if ($site_definitions) {
+      foreach ($site_definitions as $site_definition) {
+        if (strpos($site_definition['uri'], $options['prefix']) !== FALSE) {
+          $base_uri = substr($site_definition['uri'], 0, strpos($site_definition['uri'], $options['prefix']) + strlen($options['prefix']));
+          break;
+        }
       }
     }
     // Fall back to something generic: match the key in the $sites array
