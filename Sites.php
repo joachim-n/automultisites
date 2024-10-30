@@ -37,10 +37,12 @@ class Sites {
    *   an empty string, so the site directory name is expected to match the
    *   alias name.
    * @param string $server_prefix
-   *   (optional) The server part of the URL to use in the site alias. Defaults to
-   *   'localhost'. TODO: figure this out automatically.
+   *   (optional) The server part of the URL to use in the site alias. Defaults
+   *   to $_SERVER['HTTP_HOST'].
    */
-  public static function addLocalSites(array &$sites, string $app_root = NULL, string $site_dir_prefix = 'local-', string $alias_prefix = '', string $server_prefix = 'localhost') {
+  public static function addLocalSites(array &$sites, string $app_root = NULL, string $site_dir_prefix = 'local-', string $alias_prefix = '', string $server_prefix = NULL) {
+    $server_prefix ??= $_SERVER['HTTP_HOST'];
+
     // Workaround for Drush site-install command, which includes sites.php
     // but doesn't provide it with the same environment as DrupalKernel.
     if (empty($app_root)) {
